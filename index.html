@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Panduan Sholat Muhammadiyah</title>
+  <style>
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+    
+    .main-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    .sidebar {
+      width: 280px;
+      background: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      overflow-y: auto;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar h2 {
+      background: #00695c;
+      color: white;
+      margin: 0;
+      padding: 1.2em;
+      text-align: center;
+      font-size: 1.2em;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    
+    .menu-item {
+      padding: 1em 1.5em;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .menu-item:hover {
+      background-color: #e0f2f1;
+      transform: translateX(5px);
+    }
+    
+    .menu-item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: cover;
+    }
+    
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+    }
+    
+    .content {
+      flex: 1;
+      padding: 2em 3em;
+      background-color: #fff;
+      padding-bottom: 20px;
+    }
+    
+    .gambar-sholat {
+      width: auto;
+      max-width: 60%;
+      max-height: 350px;
+      border-radius: 12px;
+      margin: 1em auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: block;
+      object-fit: contain;
+    }
+    
+    .video-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 2em auto;
+      text-align: center;
+    }
+    
+    .video-container iframe {
+      width: 100%;
+      height: 450px;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    audio {
+      width: 80%;
+      margin: 1em auto;
+      display: block;
+    }
+    
+    .bacaan {
+      margin: 2em auto;
+      max-width: 800px;
+      background: #f9f9f9;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .arab {
+      font-size: 1.5em;
+      color: #00695c;
+      direction: rtl;
+      line-height: 1.8;
+      text-align: right;
+      margin-bottom: 0.5em;
+      font-family: 'Traditional Arabic', 'Arial', sans-serif;
+    }
+    
+    .ayat-number {
+      background-color: #00695c;
+      color: white;
+      padding: 0.2em 0.5em;
+      border-radius: 50%;
+      font-size: 0.6em;
+      vertical-align: super;
+      margin-left: 8px;
+      font-family: Arial;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      line-height: 25px;
+    }
+    
+    .latin {
+      font-style: italic;
+      margin-bottom: 0.8em;
+      color: #555;
+      line-height: 1.6;
+      font-size: 1.1em;
+    }
+    
+    .indo {
+      margin-bottom: 1.5em;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    .controls {
+      margin-top: 30px;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    
+    button {
+      padding: 0.8em 1.5em;
+      margin: 0 0.8em;
+      background-color: #00695c;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    button:hover {
+      background-color: #004d40;
+      transform: translateY(-2px);
+    }
+    
+    h2#judul {
+      color: #00695c;
+      margin-bottom: 1.5em;
+      font-size: 1.8em;
+      text-align: center;
+    }
+    
+    .surah-title {
+      color: #00695c;
+      border-bottom: 2px solid #e0f2f1;
+      padding-bottom: 0.5em;
+      margin: 1.5em 0 1em;
+      text-align: center;
+      font-size: 1.4em;
+    }
+    
+    .ayat-container {
+      margin-bottom: 1.5em;
+      padding: 1em;
+      background-color: #f0f7f6;
+      border-radius: 8px;
+    }
+    
+    .basmalah {
+      text-align: center;
+      margin: 1em 0;
+      padding: 1em;
+      background-color: #e8f5e9;
+      border-radius: 8px;
+    }
+    
+    .basmalah .arab {
+      font-size: 2em;
+      text-align: center;
+    }
+    
+    .footer-surah {
+      text-align: center;
+      margin-top: 1em;
+      font-style: italic;
+      color: #666;
+    }
+    
+    .tentang-kami {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    
+    .tentang-kami h3 {
+      color: #00695c;
+      margin-top: 1.5em;
+    }
+    
+    /* Footer Styles */
+    .footer-container {
+      background-color: #00695c;
+      color: white;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .footer-section {
+      margin-bottom: 20px;
+    }
+    
+    .footer-section h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 10px;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-section ul li a {
+      color: #e0f2f1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-section ul li a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    
+    .footer-section p {
+      color: #e0f2f1;
+      margin: 5px 0;
+      line-height: 1.6;
+    }
+    
+    .footer-bottom {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      margin-top: 20px;
+    }
+    
+    .footer-bottom p {
+      color: #e0f2f1;
+      margin: 5px 0;
+    }
+    
+    .copyright {
+      font-size: 0.9em;
+      color: #b2dfdb;
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      
+      .content {
+        padding: 1.5em;
+      }
+      
+      .gambar-sholat {
+        max-width: 90%;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    <div class="sidebar">
+      <h2>Panduan Sholat Muhammadiyah</h2>
+      <div class="menu-item" onclick="loadContent(0)">
+        <img src="img/Berdir.jpeg" alt="Berdiri">
+        <span>Berdiri dan Niat Sholat</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(1)">
+        <img src="img/Takbir.jpeg" alt="Takbir">
+        <span>Takbiratul Ihram</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(2)">
+        <span>Doa Iftitah</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(3)">
+        <span>Al-Fatihah</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(4)">
+        <span>Surah Pendek</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(5)">
+        <img src="img/rukuk.png" alt="Rukuk">
+        <span>Rukuk</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(6)">
+        <img src="img/Takbir.jpeg" alt="I'tidal">
+        <span>I'tidal</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(7)">
+        <img src="img/Sujud.jpeg" alt="Sujud">
+        <span>Sujud</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(8)">
+        <img src="img/duduk.jpeg" alt="Duduk">
+        <span>Duduk Antar Sujud</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(9)">
+        <img src="img/tas.jpg" alt="Tahiyat">
+        <span>Tasyahud Awal</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(10)">
+        <img src="img/tas.jpg" alt="Tahiyat">
+        <span>Tasyahud Akhir</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(11)">
+        <img src="img/Salamjpeg.jpeg" alt="Salam">
+        <span>Salam</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(12)">
+        <span>Panduan Video</span>
+      </div>
+      <div class="menu-item" onclick="loadContent(13)">
+        <span>Tentang Kami</span>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <h2 id="judul">Pilih Gerakan Sholat</h2>
+        <img id="gambarSholat" class="gambar-sholat" style="display:none;">
+        <div id="videoSholat" class="video-container" style="display:none;"></div>
+        <audio id="audioPlayer" controls style="display:none;"></audio>
+
+        <div class="bacaan" id="bacaan" style="display:none;">
+          <div class="arab" id="arabText"></div>
+          <div class="latin" id="latinText"></div>
+          <div class="indo" id="indoText"></div>
+        </div>
+
+        <div id="tentangKami" class="tentang-kami" style="display:none;">
+          <h2>Tentang Aplikasi Panduan Sholat Muhammadiyah</h2>
+          <p>Aplikasi ini dibuat untuk memudahkan umat Islam khususnya warga Muhammadiyah dalam mempelajari tata cara sholat sesuai dengan pedoman Muhammadiyah.</p>
+          
+          <h3>Visi</h3>
+          <p>Menjadi panduan sholat digital yang mudah dipahami dan dapat diakses oleh semua kalangan.</p>
+          
+          <h3>Misi</h3>
+          <ul>
+            <li>Menyediakan panduan sholat yang lengkap dan sesuai dengan tuntunan Muhammadiyah</li>
+            <li>Memudahkan pembelajaran gerakan dan bacaan sholat</li>
+            <li>Menyajikan konten yang akurat dan mudah dipahami</li>
+          </ul>
+          
+          <h3>Tim Pengembang</h3>
+          <p>Aplikasi ini dikembangkan oleh tim relawan dari kalangan Muhammadiyah yang peduli terhadap pendidikan agama Islam.</p>
+          
+          <h3>Kontak Kami</h3>
+          <p>Email: info@panduansholatmuhammadiyah.id<br>
+          Telepon: (021) 12345678</p>
+        </div>
+
+        <div class="controls">
+          <button onclick="prevContent()">Sebelumnya</button>
+          <button onclick="nextContent()">Selanjutnya</button>
+        </div>
+      </div>
+
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Panduan Sholat</h3>
+            <ul>
+              <li><a href="#" onclick="loadContent(0)">Berdiri dan Niat</a></li>
+              <li><a href="#" onclick="loadContent(1)">Takbiratul Ihram</a></li>
+              <li><a href="#" onclick="loadContent(2)">Doa Iftitah</a></li>
+              <li><a href="#" onclick="loadContent(3)">Al-Fatihah</a></li>
+              <li><a href="#" onclick="loadContent(4)">Surah Pendek</a></li>
+              <li><a href="#" onclick="loadContent(5)">Rukuk</a></li>
+              <li><a href="#" onclick="loadContent(6)">I'tidal</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Tentang</h3>
+            <ul>
+              <li><a href="#" onclick="loadContent(13)">Tentang Kami</a></li>
+              <li><a href="#"onclick="loadContent(12)"> Pandaun Video</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Kontak</h3>
+            <p>Email: info@panduansholatmuhammadiyah.id</p>
+            <p>Telepon: (021) 12345678</p>
+          </div>
+          
+          <div class="footer-bottom">
+            <p>Panduan Sholat Muhammadiyah - Versi 1.0</p>
+            <p class="copyright">© 2025 Tim Pengembang Muhammadiyah. All rights reserved.</p>
+            <p>Dosen Pengampuh: Dedy Susanto, S.Pd.I., M.M</p>
+            <P>Nama Kelompok</P>
+            <P>1. Ade Tio Denari (231230031</P>
+            <p>2. Fikri Hasan (231230019)</p>
+            <p>3. Putri Aulia Mufida(231230001)</p>
+            <p>4. Hifzan Pratama (231230067))</P>
+            <p>5. Amaluddin (231230047)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const data = [
+      {
+        judul: "Berdiri dan Niat Sholat",
+        gambar: "img/Berdir.jpeg",
+        audio: "Audio/niat.mpeg",
+        arab: `
+          <div class="arab">نَوَيْتُ أَنْ أُصَلِّيَ فَرْضَ الصُّبْحِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى<span class='ayat-number'>١</span></div>
+          <div class="arab">نَوَيْتُ أَنْ أُصَلِّيَ فَرْضَ الظُّهْرِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى<span class='ayat-number'>٢</span></div>
+          <div class="arab">نَوَيْتُ أَنْ أُصَلِّيَ فَرْضَ الْعَصْرِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى<span class='ayat-number'>٣</span></div>
+          <div class="arab">نَوَيْتُ أَنْ أُصَلِّيَ فَرْضَ الْمَغْرِبِ ثَلَاثَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى<span class='ayat-number'>٤</span></div>
+          <div class="arab">نَوَيْتُ أَنْ أُصَلِّيَ فَرْضَ الْعِشَاءِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى<span class='ayat-number'>٥</span></div>
+        `,
+        latin: `
+          <div class="latin">Nawaitu an usholliya fardhash shubhi rak'ataini mustaqbilal qiblati adaa-an lillaahi ta'aala</div>
+          <div class="latin">Nawaitu an usholliya fardhadz dzuhri arba'a raka'aatin mustaqbilal qiblati adaa-an lillaahi ta'aala</div>
+          <div class="latin">Nawaitu an usholliya fardhal 'ashri arba'a raka'aatin mustaqbilal qiblati adaa-an lillaahi ta'aala</div>
+          <div class="latin">Nawaitu an usholliya fardhal maghribi tsalaatha raka'aatin mustaqbilal qiblati adaa-an lillaahi ta'aala</div>
+          <div class="latin">Nawaitu an usholliya fardhal 'isyaa-i arba'a raka'aatin mustaqbilal qiblati adaa-an lillaahi ta'aala</div>
+        `,
+        indo: `
+          <div class="indo">Aku berniat sholat fardhu Subuh dua rakaat menghadap kiblat karena Allah Ta'ala</div>
+          <div class="indo">Aku berniat sholat fardhu Dzuhur empat rakaat menghadap kiblat karena Allah Ta'ala</div>
+          <div class="indo">Aku berniat sholat fardhu Ashar empat rakaat menghadap kiblat karena Allah Ta'ala</div>
+          <div class="indo">Aku berniat sholat fardhu Maghrib tiga rakaat menghadap kiblat karena Allah Ta'ala</div>
+          <div class="indo">Aku berniat sholat fardhu Isya' empat rakaat menghadap kiblat karena Allah Ta'ala</div>
+        `
+      },
+      {
+        judul: "Takbiratul Ihram",
+        gambar: "img/Takbir.jpeg",
+        audio: "Audio/Takbiratul_Ihram.mpeg",
+        arab: "اللّٰهُ أَكْبَرُ<span class='ayat-number'>١</span>",
+        latin: "Allahu Akbar",
+        indo: "Mengangkat kedua tangan sejajar telinga sambil mengucapkan takbir. Ibu jari sejajar daun telinga, telapak tangan menghadap kiblat."
+      },
+      {
+        judul: "Doa Iftitah",
+        audio: "Audio/iftitah.mpeg",
+        arab: "اللَّهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ<span class='ayat-number'>١</span><br>اللَّهُمَّ نَقِّنِي مِنْ خَطَايَايَ كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنْ الدَّنَسِ<span class='ayat-number'>٢</span><br>اللَّهُمَّ اغْسِلْ خَطَايَايَ بِالْمَاءِ وَالثَّلْجِ وَالْبَرَدِ<span class='ayat-number'>٣</span>",
+        latin: "Allahumma baa'id baini wa baina khathayaaya kamaa baa'adta bainal masyriqi wal maghrib<br>Allahumma naqqinii minal khathaayaa kamaa yunaqqats tsaubul abyadhu minad danas<br>Allahummaghsil khathayaaya bil maa-i wats tsalji wal barad",
+        indo: "Ya Allah, jauhkanlah antara aku dan kesalahan-kesalahanku sebagaimana Engkau telah menjauhkan antara timur dan barat<br>Ya Allah, bersihkanlah aku dari kesalahan-kesalahanku sebagaimana bersihnya kain putih dari kotoran<br>Ya Allah, cucilah kesalahan-kesalahanku dengan air, salju, dan air dingin"
+      },
+      {
+        judul: "Surah Al-Fatihah",
+        gambar: "",
+        audio: "Audio/Al-Fatihah.mpeg",
+        arab: `
+          <div class="basmalah">
+            <div class="arab">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+          </div>
+          
+          <div class="surah-title">سورة الفاتحة</div>
+          
+          <div class="ayat-container">
+            <div class="arab">الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ<span class="ayat-number">١</span></div>
+            <div class="arab">الرَّحْمَٰنِ الرَّحِيمِ<span class="ayat-number">٢</span></div>
+            <div class="arab">مَالِكِ يَوْمِ الدِّينِ<span class="ayat-number">٣</span></div>
+            <div class="arab">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ<span class="ayat-number">٤</span></div>
+            <div class="arab">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ<span class="ayat-number">٥</span></div>
+            <div class="arab">صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ<span class="ayat-number">٦</span></div>
+          </div>
+          
+          <div class="footer-surah">آمِينَ</div>
+        `,
+        latin: `
+          <div class="surah-title">Al-Fatihah (Pembukaan)</div>
+          <div class="ayat-container">
+            <div class="latin">Al-ḥamdu lillāhi rabbil-‘ālamīn</div>
+            <div class="latin">Ar-raḥmānir-raḥīm</div>
+            <div class="latin">Māliki yawmid-dīn</div>
+            <div class="latin">Iyyāka na‘budu wa iyyāka nasta‘īn</div>
+            <div class="latin">Ihdinaṣ-ṣirāṭal-mustaqīm</div>
+            <div class="latin">Ṣirāṭallażīna an‘amta ‘alaihim gairil-magḍūbi ‘alaihim wa laḍ-ḍāllīn</div>
+          </div>
+          <div class="footer-surah">Āmīn</div>
+        `,
+        indo: `
+          <div class="surah-title">Terjemahan Al-Fatihah</div>
+          <div class="ayat-container">
+            <div class="indo">Segala puji bagi Allah, Tuhan seluruh alam</div>
+            <div class="indo">Yang Maha Pengasih, Maha Penyayang</div>
+            <div class="indo">Pemilik hari pembalasan</div>
+            <div class="indo">Hanya kepada Engkaulah kami menyembah dan hanya kepada Engkaulah kami mohon pertolongan</div>
+            <div class="indo">Tunjukilah kami jalan yang lurus</div>
+            <div class="indo">(Yaitu) jalan orang-orang yang telah Engkau beri nikmat kepadanya, bukan (jalan) mereka yang dimurkai dan bukan (pula jalan) mereka yang sesat</div>
+          </div>
+          <div class="footer-surah">Aamiin</div>
+        `
+      },
+      {
+        judul: "Surah Pendek",
+        gambar: "",
+        audio: "Audio/Al-Ikhlas.mpeg",
+        arab: `
+          <div class="surah-title">سورة الإخلاص</div>
+          <div class="ayat-container">
+            <div class="arab">قُلْ هُوَ اللَّهُ أَحَدٌ<span class="ayat-number">١</span></div>
+            <div class="arab">اللَّهُ الصَّمَدُ<span class="ayat-number">٢</span></div>
+            <div class="arab">لَمْ يَلِدْ وَلَمْ يُولَدْ<span class="ayat-number">٣</span></div>
+            <div class="arab">وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ<span class="ayat-number">٤</span></div>
+          </div>
+
+          <div class="surah-title">سورة الفلق</div>
+          <div class="ayat-container">
+            <div class="arab">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ<span class="ayat-number">١</span></div>
+            <div class="arab">مِن شَرِّ مَا خَلَقَ<span class="ayat-number">٢</span></div>
+            <div class="arab">وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ<span class="ayat-number">٣</span></div>
+            <div class="arab">وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ<span class="ayat-number">٤</span></div>
+            <div class="arab">وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ<span class="ayat-number">٥</span></div>
+          </div>
+
+          <div class="surah-title">سورة الناس</div>
+          <div class="ayat-container">
+            <div class="arab">قُلْ أَعُوذُ بِرَبِّ النَّاسِ<span class="ayat-number">١</span></div>
+            <div class="arab">مَلِكِ النَّاسِ<span class="ayat-number">٢</span></div>
+            <div class="arab">إِلَٰهِ النَّاسِ<span class="ayat-number">٣</span></div>
+            <div class="arab">مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ<span class="ayat-number">٤</span></div>
+            <div class="arab">الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ<span class="ayat-number">٥</span></div>
+            <div class="arab">مِنَ الْجِنَّةِ وَالنَّاسِ<span class="ayat-number">٦</span></div>
+          </div>
+        `,
+        latin: `
+          <div class="surah-title">Al-Ikhlas (Kemurnian)</div>
+          <div class="ayat-container">
+            <div class="latin">Qul huwallāhu aḥad</div>
+            <div class="latin">Allāhuṣ-ṣamad</div>
+            <div class="latin">Lam yalid wa lam yūlad</div>
+            <div class="latin">Wa lam yakul-lahū kufuwan aḥad</div>
+          </div>
+
+          <div class="surah-title">Al-Falaq (Waktu Subuh)</div>
+          <div class="ayat-container">
+            <div class="latin">Qul a'ūdzu birabbil-falaq</div>
+            <div class="latin">Min sharri mā khalaq</div>
+            <div class="latin">Wa min sharri ghāsiqin idzā waqab</div>
+            <div class="latin">Wa min sharrin-naffāthāti fil-'uqad</div>
+            <div class="latin">Wa min sharri ḥāsidin idzā ḥasad</div>
+          </div>
+
+          <div class="surah-title">An-Nas (Umat Manusia)</div>
+          <div class="ayat-container">
+            <div class="latin">Qul a'ūdzu birabbin-nās</div>
+            <div class="latin">Malikin-nās</div>
+            <div class="latin">Ilāhin-nās</div>
+            <div class="latin">Min sharril-waswāsil-khannās</div>
+            <div class="latin">Alladzī yuwaswisu fī ṣudūrin-nās</div>
+            <div class="latin">Minal-jinnati wan-nās</div>
+          </div>
+        `,
+        indo: `
+          <div class="surah-title">Terjemahan Al-Ikhlas</div>
+          <div class="ayat-container">
+            <div class="indo">Katakanlah (Muhammad), "Dialah Allah, Yang Maha Esa"</div>
+            <div class="indo">Allah tempat meminta segala sesuatu</div>
+            <div class="indo">(Allah) tidak beranak dan tidak pula diperanakkan</div>
+            <div class="indo">Dan tidak ada sesuatu yang setara dengan-Nya"</div>
+          </div>
+
+          <div class="surah-title">Terjemahan Al-Falaq</div>
+          <div class="ayat-container">
+            <div class="indo">Katakanlah, "Aku berlindung kepada Tuhan yang menguasai subuh"</div>
+            <div class="indo">Dari kejahatan (makhluk yang) Dia ciptakan"</div>
+            <div class="indo">Dan dari kejahatan malam apabila telah gelap gulita"</div>
+            <div class="indo">Dan dari kejahatan (perempuan-perempuan) penyihir yang meniup pada buhul-buhul (talinya)"</div>
+            <div class="indo">Dan dari kejahatan orang yang dengki apabila dia dengki"</div>
+          </div>
+
+          <div class="surah-title">Terjemahan An-Nas</div>
+          <div class="ayat-container">
+            <div class="indo">Katakanlah, "Aku berlindung kepada Tuhan manusia"</div>
+            <div class="indo">Raja manusia"</div>
+            <div class="indo">Sembahan manusia"</div>
+            <div class="indo">Dari kejahatan (bisikan) setan yang bersembunyi"</div>
+            <div class="indo">Yang membisikkan (kejahatan) ke dalam dada manusia"</div>
+            <div class="indo">Dari (golongan) jin dan manusia"</div>
+          </div>
+        `
+      },
+      {
+        judul: "Rukuk",
+        gambar: "img/rukuk.PNG",
+        audio: "Audio/Rukuk_Sujud.mpeg",
+        arab: "سُبْحَانَ رَبِّيَ الْعَظِيمِ وَبِحَمْدِهِ<span class='ayat-number'>١</span>",
+        latin: "Subhaana rabbiyal 'azhiimi wa bihamdih",
+        indo: "Maha Suci Tuhanku Yang Maha Agung dan dengan memuji-Nya (dibaca 3x)"
+      },
+      {
+        judul: "I'tidal",
+        gambar: "img/Takbir.jpeg",
+        audio: "Audio/Itidal.mpeg",
+        arab: "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ<span class='ayat-number'>١</span><br>رَبَّنَا وَلَكَ الْحَمْدُ مِلْءَ السَّمَاوَاتِ وَمِلْءَ الْأَرْضِ وَمِلْءَ مَا شِئْتَ مِنْ شَيْءٍ بَعْدُ<span class='ayat-number'>٢</span>",
+        latin: "Sami'allahu liman hamidah<br>Rabbana wa lakal hamdu mil'as samawati wa mil'al ardhi wa mil'a ma syi'ta min syai'in ba'du",
+        indo: "Allah mendengar orang yang memuji-Nya<br>Ya Tuhan kami, bagi-Mu segala puji sepenuh langit dan bumi dan sepenuh apa yang Engkau kehendaki setelah itu"
+      },
+      {
+        judul: "Sujud",
+        gambar: "img/sujud.jpeg",
+        audio: "Audio/Rukuk_Sujud.mpeg",
+        arab: "سُبْحَانَ رَبِّيَ الْأَعْلَىٰ وَبِحَمْدِهِ<span class='ayat-number'>١</span>",
+        latin: "Subhaana rabbiyal a'laa wa bihamdih",
+        indo: "Maha Suci Tuhanku Yang Maha Tinggi dan dengan memuji-Nya (dibaca 3x)"
+      },
+      {
+        judul: "Duduk Antara Dua Sujud",
+        gambar: "img/Duduk.jpeg",
+        audio: "Audio/Duduk_di_Antara_Dua_Sujud.mpeg",
+        arab: "رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَاجْبُرْنِي وَارْفَعْنِي وَارْزُقْنِي وَاهْدِنِي وَعَافِنِي<span class='ayat-number'>١</span>",
+        latin: "Rabbighfirlii warhamnii wajburnii warfa'nii warzuqnii wahdinii wa 'aafinii",
+        indo: "Ya Allah, ampunilah aku, rahmatilah aku, cukupilah aku, angkatlah derajatku, berilah rezeki kepadaku, berilah petunjuk kepadaku, berilah kesehatan kepadaku"
+      },
+      {
+        judul: "Tasyahud Awal",
+        gambar: "img/tas.jpg",
+        audio: "Audio/Tasyahud_Akhir.mpeg",
+        arab: `
+          <div class="ayat-container">
+            <div class="arab">التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ<span class="ayat-number">١</span></div>
+            <div class="arab">السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ<span class="ayat-number">٢</span></div>
+            <div class="arab">السَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ<span class="ayat-number">٣</span></div>
+            <div class="arab">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ<span class="ayat-number">٤</span></div>
+          </div>
+        `,
+        latin: `
+          <div class="ayat-container">
+            <div class="latin">At-tahiyyaatu lillaahi wash-shalawaatu wath-thayyibaat</div>
+            <div class="latin">As-salaamu 'alaika ayyuhan-nabiyyu wa rahmatullaahi wa barakaatuh</div>
+            <div class="latin">As-salaamu 'alainaa wa 'alaa 'ibaadillaahish-shaalihiin</div>
+            <div class="latin">Asyhadu allaa ilaaha illallaah wa asyhadu anna Muhammadan 'abduhu wa rasuuluh</div>
+          </div>
+        `,
+        indo: `
+          <div class="ayat-container">
+            <div class="indo">Segala penghormatan, shalawat dan kebaikan adalah milik Allah</div>
+            <div class="indo">Semoga keselamatan, rahmat Allah dan berkah-Nya tercurah kepadamu wahai Nabi</div>
+            <div class="indo">Semoga keselamatan tercurah kepada kami dan hamba-hamba Allah yang shaleh</div>
+            <div class="indo">Aku bersaksi bahwa tiada Tuhan selain Allah dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya</div>
+          </div>
+        `
+      },
+      {
+        judul: "Tasyahud Akhir",
+        gambar: "img/tas.jpg",
+        audio: "Audio/Tasyahud_Akhir.mpeg",
+        arab: `
+          <div class="ayat-container">
+            <div class="arab">التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ<span class="ayat-number">١</span></div>
+            <div class="arab">السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ<span class="ayat-number">٢</span></div>
+            <div class="arab">السَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ<span class="ayat-number">٣</span></div>
+            <div class="arab">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ<span class="ayat-number">٤</span></div>
+            <div class="arab">اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ<span class="ayat-number">٥</span></div>
+            <div class="arab">إِنَّكَ حَمِيدٌ مَجِيدٌ<span class="ayat-number">٦</span></div>
+            <div class="arab">اللَّهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ<span class="ayat-number">٧</span></div>
+            <div class="arab">إِنَّكَ حَمِيدٌ مَجِيدٌ<span class="ayat-number">٨</span></div>
+          </div>
+        `,
+        latin: `
+          <div class="ayat-container">
+            <div class="latin">At-tahiyyaatu lillaahi wash-shalawaatu wath-thayyibaat</div>
+            <div class="latin">As-salaamu 'alaika ayyuhan-nabiyyu wa rahmatullaahi wa barakaatuh</div>
+            <div class="latin">As-salaamu 'alainaa wa 'alaa 'ibaadillaahish-shaalihiin</div>
+            <div class="latin">Asyhadu allaa ilaaha illallaah wa asyhadu anna Muhammadan 'abduhu wa rasuuluh</div>
+            <div class="latin">Allaahumma shalli 'alaa Muhammad wa 'alaa aali Muhammad kamaa shallaita 'alaa Ibraahiim wa 'alaa aali Ibraahiim</div>
+            <div class="latin">Innaka hamiidum majiid</div>
+            <div class="latin">Allaahumma baarik 'alaa Muhammad wa 'alaa aali Muhammad kamaa baarakta 'alaa Ibraahiim wa 'alaa aali Ibraahiim</div>
+            <div class="latin">Innaka hamiidum majiid</div>
+          </div>
+        `,
+        indo: `
+          <div class="ayat-container">
+            <div class="indo">Segala penghormatan, shalawat dan kebaikan adalah milik Allah</div>
+            <div class="indo">Semoga keselamatan, rahmat Allah dan berkah-Nya tercurah kepadamu wahai Nabi</div>
+            <div class="indo">Semoga keselamatan tercurah kepada kami dan hamba-hamba Allah yang shaleh</div>
+            <div class="indo">Aku bersaksi bahwa tiada Tuhan selain Allah dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya</div>
+            <div class="indo">Ya Allah, berikanlah shalawat kepada Muhammad dan keluarga Muhammad sebagaimana Engkau telah memberikan shalawat kepada Ibrahim dan keluarga Ibrahim</div>
+            <div class="indo">Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia</div>
+            <div class="indo">Ya Allah, berikanlah berkah kepada Muhammad dan keluarga Muhammad sebagaimana Engkau telah memberikan berkah kepada Ibrahim dan keluarga Ibrahim</div>
+            <div class="indo">Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia</div>
+          </div>
+        `
+      },
+      {
+        judul: "Salam",
+        gambar: "img/Salamjpeg.jpeg",
+        audio: "Audio/Salam.mpeg",
+        arab: "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ<span class='ayat-number'>١</span>",
+        latin: " Assalaamu 'alaikum wa rahmatullaah",
+        indo: "Semoga keselamatan dan rahmat Allah tercurah kepadamu (dibaca sambil menengok ke kanan dan ke kiri)"
+      },
+      {
+        judul: "Panduan Video Sholat Muhammadiyah",
+        video: "https://www.youtube.com/embed/cIr7w8hUZxI?si=taQmoqPzInUXqhfu",
+        arab: "",
+        latin: "",
+        indo: "Berikut adalah video panduan lengkap sholat sesuai dengan tuntunan Muhammadiyah. Video ini mencakup semua gerakan sholat dari takbiratul ihram hingga salam."
+      },
+      {
+        judul: "Tentang Kami",
+        arab: "",
+        latin: "",
+        indo: ""
+      }
+    ];
+
+    let currentIndex = -1;
+
+    function loadContent(index) {
+      if (index < 0 || index >= data.length) return;
+      currentIndex = index;
+
+      const item = data[index];
+      document.getElementById("judul").innerText = item.judul;
+
+      const gambar = document.getElementById("gambarSholat");
+      gambar.src = item.gambar || "";
+      gambar.style.display = item.gambar ? "block" : "none";
+
+      const videoContainer = document.getElementById("videoSholat");
+      if (item.video) {
+        videoContainer.innerHTML = `<iframe src="${item.video}" frameborder="0" allowfullscreen></iframe>`;
+        videoContainer.style.display = "block";
+      } else {
+        videoContainer.innerHTML = "";
+        videoContainer.style.display = "none";
+      }
+
+      const audio = document.getElementById("audioPlayer");
+      audio.src = item.audio || "";
+      audio.style.display = item.audio ? "block" : "none";
+
+      document.getElementById("arabText").innerHTML = item.arab || "";
+      document.getElementById("latinText").innerHTML = item.latin || "";
+      document.getElementById("indoText").innerHTML = item.indo || "";
+      document.getElementById("bacaan").style.display = (item.arab || item.latin || item.indo) ? "block" : "none";
+
+      const tentangKami = document.getElementById("tentangKami");
+      tentangKami.style.display = index === 13 ? "block" : "none";
+    }
+
+    function nextContent() {
+      if (currentIndex < data.length - 1) loadContent(currentIndex + 1);
+    }
+
+    function prevContent() {
+      if (currentIndex > 0) loadContent(currentIndex - 1);
+    }
+
+    // Load first content by default
+    loadContent(0);
+  </script>
+</body>
+</html>
